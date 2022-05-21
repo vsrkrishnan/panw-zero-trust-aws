@@ -29,7 +29,7 @@ install-prerequisites
 terraform-install
 
 # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
-cd "${HOME}/panw-zero-trust-aws/terraform/zero-trust-lab"
+cd "${HOME}/panw-zero-trust-aws/terraform/vmseries01/zero-trust-lab"
 
 # Initialize terraform
 echo "Initializing directory for lab resource deployment"
