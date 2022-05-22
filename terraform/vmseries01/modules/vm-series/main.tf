@@ -6,7 +6,7 @@ locals {
       "type"                = "dhcp-client"
       "tplname"             = var.panorama.tplname
       "dgname"              = var.panorama.dgname
-      "panorama-server"     = var.panorama.panorama-server
+      "panorama-server"     = var.panorama_ip
       "vm-auth-key"         = var.panorama.vm-auth-key
       #"authcodes"           = var.authcodes
   }

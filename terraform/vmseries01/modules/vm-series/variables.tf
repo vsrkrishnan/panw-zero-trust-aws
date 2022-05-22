@@ -10,4 +10,5 @@ variable "subnet_ids" {}
 variable "security_groups" {}
 variable "vpc_name" {}
 variable "panorama" {}
+variable "panorama_ip" { default = "" }
 variable "authcodes" { default = [] }

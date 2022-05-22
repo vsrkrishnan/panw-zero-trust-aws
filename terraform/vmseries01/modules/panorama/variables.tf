@@ -1,7 +1,5 @@
 
-variable "panorama" { default = {} }
-variable "panorama_version" { default = ""}
-variable "panorama_product_code" { default = ""}
+variable "panorama" {}
 variable "ssh_key_name" {}
 variable "prefix-name-tag" {}
 variable "global_tags" {}

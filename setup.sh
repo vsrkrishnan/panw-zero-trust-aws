@@ -56,6 +56,25 @@ function deploy_vmseries_lab() {
     fi
 }
 
+function deploy_cnseries_lab() {
+    # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
+    cd "${HOME}/panw-zero-trust-aws/terraform/cnseries01"
+
+    # Initialize terraform
+    echo "Initializing directory for lab resource deployment"
+    terraform init
+
+    # Deploy resources
+    echo "Deploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust on AWS"
+    terraform apply -auto-approve
+
+    if [ $? -eq 0 ]; then
+        echo "AWS Zero Trust Reference Architecture Lab Deployment Completed successfully!"
+    else
+        echo "AWS Zero Trust Reference Architecture Lab Deployment Failed!"
+    fi
+}
+
 install_prerequisites
 install_terraform
 install_kubectl
