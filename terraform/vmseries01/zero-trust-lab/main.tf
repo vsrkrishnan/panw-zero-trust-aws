@@ -32,20 +32,28 @@ module "security-vpc" {
     nat_gateways    = var.nat_gateways
     global_tags     = var.global_tags
 }
-/*
+
+module "management-vpc" {
+  source          = "../modules/vpc"
+  vpc             = var.management-vpc
+  prefix-name-tag = var.prefix-name-tag
+  subnets         = var.management-vpc-subnets
+  route-tables    = var.management-vpc-route-tables
+  security-groups = var.management-vpc-security-groups
+  global_tags     = var.global_tags
+}
+
 module "panorama" {
   source                = "../modules/panorama"
-  panorama_product_code = var.panorama_product_code
-  panorama_version      = var.panorama_version
   panorama              = var.panorama
-  ssh_key_name          = module.security-vpc.ssh_key_name
+  ssh_key_name          = module.management-vpc.ssh_key_name
   prefix-name-tag       = var.prefix-name-tag
-  vpc_name              = module.security-vpc.vpc_name
-  subnet_ids            = module.security-vpc.subnet_ids
-  security_groups       = module.security-vpc.security_groups
+  vpc_name              = module.management-vpc.vpc_name
+  subnet_ids            = module.management-vpc.subnet_ids
+  security_groups       = module.management-vpc.security_groups
   global_tags           = var.global_tags
 }
-*/
+
 module "vm-series" {
   source          = "../modules/vm-series"
   fw_product_code = var.fw_product_code
@@ -58,9 +66,10 @@ module "vm-series" {
   subnet_ids      = module.security-vpc.subnet_ids
   security_groups = module.security-vpc.security_groups
   panorama        = var.panorama
+  panorama_ip     = module.panorama.panorama_ip
   global_tags     = var.global_tags
 
-  #depends_on      = [ module.panorama ]
+  depends_on      = [ module.panorama ]
 }
 
 module "gwlb" {

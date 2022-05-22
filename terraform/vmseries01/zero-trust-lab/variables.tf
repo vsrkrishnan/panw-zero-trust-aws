@@ -19,15 +19,17 @@ variable "security-vpc-route-tables" { default = [] }
 variable "security-vpc-security-groups" { default = [] }
 variable "security-vpc-routes" { default = [] }
 
+variable "management-vpc" { default = {} }
+variable "management-vpc-subnets" { default = [] }
+variable "management-vpc-route-tables" { default = [] }
+variable "management-vpc-security-groups" { default = [] }
+variable "panorama" { default = {} }
+
 variable "fw_version" { default = "" }
 variable "fw_product_code" { default = [] }
 variable "fw_instance_type" { default = "" }
-variable "panorama_version" { default = ""}
-variable "panorama_product_code" { default = ""}
-variable "panorama_instance_type" { default = ""}
 
 variable "firewalls" { default = [] }
-variable "panorama" { default = {} }
 variable "firewall-interfaces" { default = [] }
 variable "nat_gateways" { default = {} }
 variable "gateway_load_balancer" { default = {} }

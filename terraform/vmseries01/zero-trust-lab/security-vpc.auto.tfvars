@@ -181,9 +181,6 @@ transit-gateway-routes = {
 fw_version = "10.2.1"
 fw_product_code = ["hd44w1chf26uv4p52cdynb2o"]
 
-panorama_version = "10.2.0"
-panorama_product_code = ["eclz7j04vu9lf8ont8ta3n17o"]
-
 firewalls = [
   {
     name              = "vmseries01"
@@ -212,19 +209,6 @@ firewall-interfaces = [
     security_group    = "ngfw-mgmt-sg"
   }
 ]
-
-panorama = {
-  name              = "panorama"
-  source_dest_check = true
-  subnet_name       = "ngfw-mgmt-subnet"
-  private_ips       = ["10.3.2.101"]
-  security_group    = "ngfw-mgmt-sg"
-  instance_type     = "c5.4xlarge"
-  tplname           = "VM-tempstack"
-  dgname            = "VM-DG"
-  panorama-server   = "3.97.27.133"
-  vm-auth-key       = "410447188942721"
-}
 
 nat_gateways = {
   sec-vpc-natgw = {
