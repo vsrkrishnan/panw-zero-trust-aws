@@ -16,7 +16,7 @@
 
 variable "region" {
   type        = string
-  default     = "ca-central-1"
+  default     = "us-east-1"
   description = "The AWS region"
 }
 
