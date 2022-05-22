@@ -1,14 +1,14 @@
 
-# Sticking to Terraform v1.1.7 as it was used for the development of this code-base
-TERRAFORM_VERSION="1.1.7"
-
-function install-prerequisites() {
+function install_prerequisites() {
     sudo yum install -y jq
     sudo yum install -y wget
 }
 
 # Function to check if Terraform is installed already, if not, then download and installed the version of Terraform as required.
-function terraform-install() {
+function install_terraform() {
+    # Sticking to Terraform v1.1.7 as it was used for the development of this code-base
+    TERRAFORM_VERSION="1.1.7"
+
     # Check if terraform is already installed and display the version of terraform as installed
     [[ -f ${HOME}/bin/terraform ]] && echo "`${HOME}/bin/terraform version` already installed at ${HOME}/bin/terraform" && return 0
 
@@ -25,22 +25,40 @@ function terraform-install() {
     echo "Installed: `${HOME}/bin/terraform version`"
 }
 
-install-prerequisites
-terraform-install
+function install_kubectl() {
+    KUBECTL_VERSION="1.23.0"
+    KUBECTL_DOWNLOAD_URL="https://dl.k8s.io/release/v$KUBECTL_VERSION/bin/linux/amd64/kubectl"
+    cd ${HOME}/bin/ && curl -LO $KUBECTL_DOWNLOAD_URL && chmod +x kubectl
+}
 
-# Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
-cd "${HOME}/panw-zero-trust-aws/terraform/vmseries01/zero-trust-lab"
+function install_aws_iam_authenticator() {
+    AWS_IAM_AUTH_VERSION="1.21.2"
+    AWS_IAM_AUTH_DOWNLOAD_URL="https://s3.us-west-2.amazonaws.com/amazon-eks/$AWS_IAM_AUTH_VERSION/2021-07-05/bin/linux/amd64/aws-iam-authenticator"
+    cd ${HOME}/bin/ && curl -o aws-iam-authenticator $AWS_IAM_AUTH_DOWNLOAD_URL && chmod +x aws-iam-authenticator
+}
 
-# Initialize terraform
-echo "Initializing directory for lab resource deployment"
-terraform init
+function deploy_vmseries_lab() {
+    # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
+    cd "${HOME}/panw-zero-trust-aws/terraform/vmseries01/zero-trust-lab"
 
-# Deploy resources
-echo "Deploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust on AWS"
-terraform apply -auto-approve
+    # Initialize terraform
+    echo "Initializing directory for lab resource deployment"
+    terraform init
 
-if [ $? -eq 0 ]; then
-    echo "AWS Zero Trust Reference Architecture Lab Deployment Completed successfully!"
-else
-    echo "AWS Zero Trust Reference Architecture Lab Deployment Failed!"
-fi
+    # Deploy resources
+    echo "Deploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust on AWS"
+    terraform apply -auto-approve
+
+    if [ $? -eq 0 ]; then
+        echo "AWS Zero Trust Reference Architecture Lab Deployment Completed successfully!"
+    else
+        echo "AWS Zero Trust Reference Architecture Lab Deployment Failed!"
+    fi
+}
+
+install_prerequisites
+install_terraform
+install_kubectl
+install_aws_iam_authenticator
+
+deploy_vmseries_lab
