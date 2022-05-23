@@ -25,7 +25,12 @@ resource "time_sleep" "wait_for_panorama_instance" {
 }
 
 resource "aws_eip" "elasticip" {
-  instance = aws_instance.this.id
+  #instance = aws_instance.this.id
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  allocation_id = aws_eip.elasticip.id
+  network_interface_id = aws_network_interface.private.id
 }
 
 resource "time_sleep" "wait_for_panorama_ip" {
@@ -35,5 +40,5 @@ resource "time_sleep" "wait_for_panorama_ip" {
 }
 
 output "panorama_ip" {
-  value = aws_instance.this.public_ip
+  value = aws_eip.elasticip.public_ip
 }
