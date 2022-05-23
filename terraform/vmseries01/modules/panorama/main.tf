@@ -18,8 +18,20 @@ resource "aws_instance" "this" {
   tags = merge({ Name = "${var.prefix-name-tag}${var.panorama.name}" }, var.global_tags)
 }
 
+resource "time_sleep" "wait_for_panorama_instance" {
+  create_duration = "30s"
+
+  depends_on = [ aws_instance.this ]
+}
+
 resource "aws_eip" "elasticip" {
   instance = aws_instance.this.id
+}
+
+resource "time_sleep" "wait_for_panorama_ip" {
+  create_duration = "30s"
+
+  depends_on = [ aws_eip.elasticip ]
 }
 
 output "panorama_ip" {

@@ -73,6 +73,15 @@ function deploy_vmseries_lab() {
 }
 
 function deploy_cnseries_lab() {
+
+    cd "${HOME}/panw-zero-trust-aws/terraform/vmseries01/zero-trust-lab"
+
+    if [[ ! $(terraform state list | grep panorama) ]]; then
+        terraform init
+        terraform plan -target=module.management-vpc -target=module.panorama
+        terraform apply -target=module.management-vpc -target=module.panorama -auto-approve
+    fi
+
     # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
     cd "${HOME}/panw-zero-trust-aws/terraform/cnseries01"
 
@@ -97,6 +106,7 @@ install_terraform
 install_kubectl
 install_aws_iam_authenticator
 
+# TODO: Need to improve this area
 if [ $# -gt 0 ]
 then
     if [ $1 == "vm" ]

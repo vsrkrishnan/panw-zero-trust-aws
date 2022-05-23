@@ -27,5 +27,5 @@ output "kubectl_config_command" {
 }
 
 output "kubectl_demo_application_deployment_command" {
-  value = "kubectl apply -f ../sample-application/guestbook.yml"
+  value = "kubectl apply -f ./sample-app/guestbook.yml"
 }
