@@ -16,9 +16,20 @@ management-vpc-subnets = [
   { name = "subnet", cidr = "10.4.1.0/24", az = "a" }
 ]
 
+management-vpc-routes = {
+  mgmt-out = {
+    name          = "out"
+    vpc_name      = "mgmt-vpc"
+    route_table   = "rt"
+    prefix        = "0.0.0.0/0"
+    next_hop_type = "internet_gateway"
+    next_hop_name = "igw"
+  }
+}
+
 management-vpc-security-groups = [
   {
-    name = "sg"
+    name = "panorama-sg"
     rules = [
       {
         description = "Permit All traffic outbound"
@@ -34,6 +45,11 @@ management-vpc-security-groups = [
         description = "Permit All SSH inbound traffic"
         type        = "ingress", from_port = "22", to_port = "22", protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
+      },
+      {
+        description = "Permit All SSH inbound traffic"
+        type        = "ingress", from_port = "3978", to_port = "3978", protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
       }
     ]
   }
@@ -44,10 +60,10 @@ panorama = {
   source_dest_check = true
   subnet_name       = "subnet"
   private_ips       = ["10.4.1.100"]
-  security_group    = "sg"
+  security_group    = "panorama-sg"
   instance_type     = "c5.4xlarge"
   tplname           = "VM-tempstack"
   dgname            = "VM-DG"
   vm-auth-key       = "410447188942721"
-  ami               = "ami-056f74fbb2c053685"
+  ami               = "ami-059f0e59d64ac9d63" #"ami-056f74fbb2c053685"
 }

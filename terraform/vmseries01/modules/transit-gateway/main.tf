@@ -40,10 +40,14 @@ resource "aws_ec2_transit_gateway_route_table" "this" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
-  for_each = { for key, value in var.vpcs: key => value }
+  for_each = {
+    for key, value in var.vpcs:
+    key => value
+    if length(regexall("mgmt", key)) == 0
+  }
   
   subnet_ids = [ 
-      for key, value in each.value.subnet_ids: 
+      for key, value in each.value.subnet_ids:
       value
       if length(regexall("-tgw", key)) > 0
     ]

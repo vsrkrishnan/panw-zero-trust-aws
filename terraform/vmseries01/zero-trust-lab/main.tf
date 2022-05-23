@@ -88,7 +88,8 @@ locals {
   vpcs = {
     "${module.vulnerable-vpc.vpc_details.name}"  : module.vulnerable-vpc.vpc_details,
     "${module.attack-vpc.vpc_details.name}"      : module.attack-vpc.vpc_details,
-    "${module.security-vpc.vpc_details.name}"    : module.security-vpc.vpc_details
+    "${module.security-vpc.vpc_details.name}"    : module.security-vpc.vpc_details,
+    "${module.management-vpc.vpc_details.name}"  : module.management-vpc.vpc_details
   }
 }
 
@@ -104,7 +105,7 @@ module "transit-gateway" {
 
 module "vpc-routes" {
   source          = "../modules/vpc_routes"
-  vpc-routes      = merge(var.vulnerable-vpc-routes, var.attack-vpc-routes, var.security-vpc-routes)
+  vpc-routes      = merge(var.vulnerable-vpc-routes, var.attack-vpc-routes, var.security-vpc-routes, var.management-vpc-routes)
   vpcs            = local.vpcs
   tgw-ids         = module.transit-gateway.tgw-ids
   ngfw-data-eni   = module.vm-series.ngfw-data-eni
