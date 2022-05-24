@@ -65,5 +65,5 @@ panorama = {
   tplname           = "VM-tempstack"
   dgname            = "VM-DG"
   vm-auth-key       = "410447188942721"
-  ami               = "ami-059f0e59d64ac9d63" #"ami-056f74fbb2c053685"
+  ami               = "ami-0f1a372841f68f319"
 }
