@@ -14,55 +14,55 @@
 
 # Table of Contents
 
-[**Table of Contents**** ****2**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.145rn2p5f27q)
+[**Table of Contents**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.145rn2p5f27q)
 
-[**Overview**** ****3**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.99h5e1s1wo43)
+[**Overview**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.99h5e1s1wo43)
 
-[Hands on Labs – Zero Trust Exercise Summary 3](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.lwu81ipa4c4f)
+[Hands on Labs – Zero Trust Exercise Summary](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.lwu81ipa4c4f)
 
-[Hands-On Lab – Palo Alto Networks Product Coverage 4](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.kk7e4pakydq)
+[Hands-On Lab – Palo Alto Networks Product Coverage](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.kk7e4pakydq)
 
-[**Application Environment Overview**** ****4**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.vh558okzw1el)
+[**Application Environment Overview**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.vh558okzw1el)
 
-[What You'll Do 5](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.tt3c5bhdg3gv)
+[What You'll Do](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.tt3c5bhdg3gv)
 
-[Launch the lab environment 5](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.tzb29urffstq)
+[Launch the lab environment](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.tzb29urffstq)
 
-[Start qwiklabs lab environment and login to AWS 5](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.kfoz4g57q659)
+[Start qwiklabs lab environment and login to AWS](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.kfoz4g57q659)
 
-[Set up AWS Account permissions 9](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.ga1vtnisisx9)
+[Set up AWS Account permissions](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.ga1vtnisisx9)
 
-[Launch lab environment 12](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.zhkfyrsdexzy)
+[Launch lab environment](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.zhkfyrsdexzy)
 
-[**Activity 1: Protect Against Log4j Attack**** ****18**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.cxmag11s292k)
+[**Activity 1: Protect Against Log4j Attack**](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.cxmag11s292k)
 
-[Set Up the Applications 19](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.4yq3mt9ta2an)
+[Set Up the Applications](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.4yq3mt9ta2an)
 
-[Note the public IPs of the app servers 19](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.hf214aa2rrrz)
+[Note the public IPs of the app servers](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.hf214aa2rrrz)
 
-[Connecting to the app servers 20](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.m270sbuxdlfm)
+[Connecting to the app servers](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.m270sbuxdlfm)
 
-[Using the PEM file 20](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.omleejorzmy8)
+[Using the PEM file](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.omleejorzmy8)
 
-[Using the PPK file 21](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.u0emolxm3tia)
+[Using the PPK file](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.u0emolxm3tia)
 
-[Set up the Vulnerable application server 22](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.v37efxbl4kty)
+[Set up the Vulnerable application server](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.v37efxbl4kty)
 
-[Set up the Attack application server 24](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.ib93mrfe83cm)
+[Set up the Attack application server](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.ib93mrfe83cm)
 
-[Log in to Panorama 25](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.hj0f8vfw6nrk)
+[Log in to Panorama](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.hj0f8vfw6nrk)
 
-[Launch Log4J Attack 27](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.wf7o5qqwyvvs)
+[Launch Log4J Attack](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.wf7o5qqwyvvs)
 
-[Best Practices for Protection against Log4J 28](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.f17y6otq6vwg)
+[Best Practices for Protection against Log4J](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.f17y6otq6vwg)
 
-[Deploy Zero Trust Policy for INBOUND Traffic 29](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.54u4ytu2zzx8)
+[Deploy Zero Trust Policy for INBOUND Traffic](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.54u4ytu2zzx8)
 
-[Deploy Zero Trust Policy for OUTBOUND Traffic 34](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.a62sco509b)
+[Deploy Zero Trust Policy for OUTBOUND Traffic](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.a62sco509b)
 
-[Deploy Zero Trust Policy to Limit Applications To and From Untrusted Sources 40](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.f0w76po3if0o)
+[Deploy Zero Trust Policy to Limit Applications To and From Untrusted Sources](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.f0w76po3if0o)
 
-[Activity Final Thoughts 44](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.35ehbw97b0m)
+[Activity Final Thoughts](https://docs.google.com/document/d/1h0fzj6ywL4MUE8OWz9syIOO7wjpIC41dbfQ12dIwd5Q/edit#heading=h.35ehbw97b0m)
 
 
 
