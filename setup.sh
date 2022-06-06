@@ -53,9 +53,28 @@ function install_aws_iam_authenticator() {
     mkdir -p ${HOME}/bin/ && cd ${HOME}/bin/ && curl -o aws-iam-authenticator $AWS_IAM_AUTH_DOWNLOAD_URL && chmod +x aws-iam-authenticator
 }
 
+function deploy_panorama() {
+    cd "${HOME}/panw-zero-trust-aws/terraform/panorama"
+
+    # Initialize terraform
+    echo "Initializing directory for lab resource deployment"
+    terraform init
+
+    # Deploy resources
+    echo "Deploying Panorama Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
+    terraform apply -auto-approve
+
+    if [ $? -eq 0 ]; then
+        echo "Panorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
+    else
+        echo "Panorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Failed!"
+        exit 1
+    fi
+}
+
 function deploy_vmseries_lab() {
     # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
-    cd "${HOME}/panw-zero-trust-aws/terraform/vmseries01/zero-trust-lab"
+    cd "${HOME}/panw-zero-trust-aws/terraform/vmseries"
 
     # Initialize terraform
     echo "Initializing directory for lab resource deployment"
@@ -69,21 +88,14 @@ function deploy_vmseries_lab() {
         echo "AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
     else
         echo "AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Failed!"
+        exit 1
     fi
 }
 
 function deploy_cnseries_lab() {
 
-    cd "${HOME}/panw-zero-trust-aws/terraform/vmseries01/zero-trust-lab"
-
-    if [[ ! $(terraform state list | grep panorama) ]]; then
-        terraform init
-        terraform plan -target=module.management-vpc -target=module.panorama
-        terraform apply -target=module.management-vpc -target=module.panorama -auto-approve
-    fi
-
     # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
-    cd "${HOME}/panw-zero-trust-aws/terraform/cnseries01"
+    cd "${HOME}/panw-zero-trust-aws/terraform/cnseries"
 
     # Initialize terraform
     echo "Initializing directory for lab resource deployment"
@@ -98,13 +110,13 @@ function deploy_cnseries_lab() {
     else
         echo "AWS Zero Trust Reference Architecture with CN-Series Lab Deployment Failed!"
         echo "Please try updating the kubeconfig and run setup again. Check the Lab Guide for more details."
+        exit 1
     fi
 }
 
 install_prerequisites
 install_terraform
-install_kubectl
-install_aws_iam_authenticator
+deploy_panorama
 
 # TODO: Need to improve this area
 if [ $# -gt 0 ]
@@ -114,6 +126,8 @@ then
         deploy_vmseries_lab
     elif [ $1 == "cn" ]
     then
+        install_kubectl
+        install_aws_iam_authenticator
         deploy_cnseries_lab
     else
         echo "Bad argument!"

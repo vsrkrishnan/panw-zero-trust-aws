@@ -9,6 +9,7 @@ variable "global_tags" {}
 variable "subnet_ids" {}
 variable "security_groups" {}
 variable "vpc_name" {}
-variable "panorama" {}
+#variable "panorama" {}
 variable "panorama_ip" { default = "" }
 variable "authcodes" { default = [] }
+variable "bootstrap_options" {}

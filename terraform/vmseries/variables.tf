@@ -32,6 +32,7 @@ variable "fw_instance_type" { default = "" }
 
 variable "firewalls" { default = [] }
 variable "firewall-interfaces" { default = [] }
+variable "firewall-bootstrap_options" { default = {} }
 variable "nat_gateways" { default = {} }
 variable "gateway_load_balancer" { default = {} }
 variable "gateway_load_balancer_endpoints" { default = {} }
