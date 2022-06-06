@@ -62,8 +62,5 @@ panorama = {
   private_ips       = ["10.4.1.100"]
   security_group    = "panorama-sg"
   instance_type     = "c5.4xlarge"
-  tplname           = "VM-tempstack"
-  dgname            = "VM-DG"
-  vm-auth-key       = "410447188942721"
   ami               = "ami-0f1a372841f68f319"
 }

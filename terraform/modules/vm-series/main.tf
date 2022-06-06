@@ -1,15 +1,10 @@
 
 locals {
-  bootstrap_options = {
-      "mgmt-interface-swap" = "enable"
-      "plugin-op-commands"  = "aws-gwlb-inspect:enable"
-      "type"                = "dhcp-client"
-      "tplname"             = var.panorama.tplname
-      "dgname"              = var.panorama.dgname
-      "panorama-server"     = var.panorama_ip
-      "vm-auth-key"         = var.panorama.vm-auth-key
-      #"authcodes"           = var.authcodes
+  panorama_ip_bootstrap = {
+    "panorama-server"     = data.aws_instance.panorama.public_ip
   }
+
+  bootstrap_options = merge(var.bootstrap_options, local.panorama_ip_bootstrap)
 }
 
 data "aws_ami" "pa-vm" {
@@ -24,6 +19,18 @@ data "aws_ami" "pa-vm" {
   filter {
     name   = "name"
     values = ["PA-VM-AWS-${var.fw_version}*"]
+  }
+}
+
+data "aws_instance" "panorama" {
+  filter {
+    name = "tag:Name"
+    values = ["${var.prefix-name-tag}panorama"]
+  }
+
+  filter {
+    name = "instance-state-name"
+    values = ["running"]
   }
 }
 

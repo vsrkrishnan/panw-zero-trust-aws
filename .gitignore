@@ -32,7 +32,7 @@ override.tf.json
 *.terraform.lock.hcl*
 
 # Ignoring the directories specific to workspace
-ssh-keys/
+.ssh-keys/
 tests/
 
 # Miscellaneous files

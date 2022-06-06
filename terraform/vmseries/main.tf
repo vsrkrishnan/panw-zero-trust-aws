@@ -33,27 +33,6 @@ module "security-vpc" {
     global_tags     = var.global_tags
 }
 
-module "management-vpc" {
-  source          = "../modules/vpc"
-  vpc             = var.management-vpc
-  prefix-name-tag = var.prefix-name-tag
-  subnets         = var.management-vpc-subnets
-  route-tables    = var.management-vpc-route-tables
-  security-groups = var.management-vpc-security-groups
-  global_tags     = var.global_tags
-}
-
-module "panorama" {
-  source                = "../modules/panorama"
-  panorama              = var.panorama
-  ssh_key_name          = module.management-vpc.ssh_key_name
-  prefix-name-tag       = var.prefix-name-tag
-  vpc_name              = module.management-vpc.vpc_name
-  subnet_ids            = module.management-vpc.subnet_ids
-  security_groups       = module.management-vpc.security_groups
-  global_tags           = var.global_tags
-}
-
 module "vm-series" {
   source          = "../modules/vm-series"
   fw_product_code = var.fw_product_code
@@ -65,11 +44,8 @@ module "vm-series" {
   vpc_name        = module.security-vpc.vpc_name
   subnet_ids      = module.security-vpc.subnet_ids
   security_groups = module.security-vpc.security_groups
-  panorama        = var.panorama
-  panorama_ip     = module.panorama.panorama_ip
+  bootstrap_options = var.firewall-bootstrap_options
   global_tags     = var.global_tags
-
-  depends_on      = [ module.panorama ]
 }
 
 module "gwlb" {
@@ -84,15 +60,6 @@ module "gwlb" {
   global_tags           = var.global_tags
 }
 
-locals {
-  vpcs = {
-    "${module.vulnerable-vpc.vpc_details.name}"  : module.vulnerable-vpc.vpc_details,
-    "${module.attack-vpc.vpc_details.name}"      : module.attack-vpc.vpc_details,
-    "${module.security-vpc.vpc_details.name}"    : module.security-vpc.vpc_details,
-    "${module.management-vpc.vpc_details.name}"  : module.management-vpc.vpc_details
-  }
-}
-
 module "transit-gateway" {
   source          = "../modules/transit-gateway"
   transit-gateway = var.transit-gateway
@@ -103,9 +70,17 @@ module "transit-gateway" {
   transit-gateway-routes       = var.transit-gateway-routes
 }
 
+locals {
+  vpcs = {
+    "${module.vulnerable-vpc.vpc_details.name}"  : module.vulnerable-vpc.vpc_details,
+    "${module.attack-vpc.vpc_details.name}"      : module.attack-vpc.vpc_details,
+    "${module.security-vpc.vpc_details.name}"    : module.security-vpc.vpc_details
+  }
+}
+
 module "vpc-routes" {
   source          = "../modules/vpc_routes"
-  vpc-routes      = merge(var.vulnerable-vpc-routes, var.attack-vpc-routes, var.security-vpc-routes, var.management-vpc-routes)
+  vpc-routes      = merge(var.vulnerable-vpc-routes, var.attack-vpc-routes, var.security-vpc-routes)
   vpcs            = local.vpcs
   tgw-ids         = module.transit-gateway.tgw-ids
   ngfw-data-eni   = module.vm-series.ngfw-data-eni

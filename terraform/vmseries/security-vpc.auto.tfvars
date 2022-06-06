@@ -193,6 +193,15 @@ firewalls = [
   }
 ]
 
+firewall-bootstrap_options = {
+  "mgmt-interface-swap" = "enable"
+  "plugin-op-commands"  = "aws-gwlb-inspect:enable"
+  "type"                = "dhcp-client"
+  "tplname"             = "VM-tempstack"
+  "dgname"              = "VM-DG"
+  "vm-auth-key"         = "410447188942721"
+}
+
 firewall-interfaces = [
   {
     name              = "vmseries01-data"
