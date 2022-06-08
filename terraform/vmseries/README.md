@@ -422,7 +422,7 @@ https://<panorama_public_IP>
 59. Notice the 3 sessions associated with a successful Log4J attack.
 
 | Source              | Destination         | Destination Port | Application      |
-| ------------------------------------------------------------------------------- |
+| ------------------- | ------------------- | ---------------- | ---------------- |
 | att-svr(10.2.1.100) | vul-app(10.1.1.100) | 8080             | web              |
 | vul-app(10.1.1.100) | att-svr(10.2.1.100) | 1389             | LDAP             |
 | vul-app(10.1.1.100) | att-svr(10.2.1.100) | 8888             | Malware transfer | 
