@@ -200,7 +200,7 @@ It takes around a minute for cloudshell to launch and to get the prompt as shown
 27. After the cloudshell is launched, we will start by cloning the following github repository:
 
 ```
-git clone https&#x3A;//github.com/PaloAltoNetworks/lab-aws-zero-trust.git
+git clone https://github.com/PaloAltoNetworks/lab-aws-zero-trust.git
 ```
 
 ![](https://lh6.googleusercontent.com/j_sOgBaZFZ0-Y2hhwoO9RPJtWx5ACjj6SChcRG1MhiRmK94zBpVtkG__MUT_szGjB3VhlaLL9zUG1RneRlV7UWY45gdgXGrqiuUHQu20vzsX5p06QcOYqXCxmA04xfYiN4UMtIBfURCeMi4lnQ)
@@ -351,7 +351,7 @@ sudo docker exec -it vul-app-1 /bin/sh -c 'ping att-svr'
     1. If you are using a PEM file to connect, substitute qwikLABS-\*\*\*\*.pem with the PEM key that you downloaded and run the command below. Username is ‘ec2-user’, IP Address is the public IP address of the ‘qwikLABS-att-app-server’ that we noted in the previous step.
 
     ```
-    ssh -i qwikLABS-L\*\*\*\*.pem ec2-user@&lt;att-server-public-ip>
+    ssh -i qwikLABS-L\*\*\*\*.pem ec2-user@<att-server-public-ip>
     ```
 
     For example:
