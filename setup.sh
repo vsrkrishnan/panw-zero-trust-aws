@@ -162,6 +162,11 @@ function deploy_cnseries_lab() {
         echo "There was an error seen while deploying the demo application."
         exit 1
     fi
+
+    # Getting the credentials json file for configuring the cluster on Panorama.
+    echo -e "\nGetting the credentials json file for configuring the cluster on Panorama."
+    MY_TOKEN=`kubectl get serviceaccounts pan-plugin-user -n kube-system -o jsonpath='{.secrets[0].name}'`
+    kubectl get secret $MY_TOKEN -n kube-system -o json > ~/pan-plugin-user.json
 }
 
 install_prerequisites
