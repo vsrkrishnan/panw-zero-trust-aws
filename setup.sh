@@ -1,3 +1,4 @@
+# set -x
 
 function install_prerequisites() {
     sudo yum install -y jq
@@ -10,19 +11,19 @@ function install_terraform() {
     TERRAFORM_VERSION="1.1.7"
 
     # Check if terraform is already installed and display the version of terraform as installed
-    [[ -f ${HOME}/bin/terraform ]] && echo "`${HOME}/bin/terraform version` already installed at ${HOME}/bin/terraform" && return 0
+    [[ -f ${HOME}/bin/terraform ]] && echo -e "\n`${HOME}/bin/terraform version` already installed at ${HOME}/bin/terraform" && return 0
 
     TERRAFORM_DOWNLOAD_URL=$(curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | egrep 'linux.*amd64' | egrep "${TERRAFORM_VERSION}" | egrep -v 'rc|beta|alpha')
     TERRAFORM_DOWNLOAD_FILE=$(basename $TERRAFORM_DOWNLOAD_URL)
 
-    echo "Downloading Terraform v$TERRAFORM_VERSION from '$TERRAFORM_DOWNLOAD_URL'"
+    echo -e "\nDownloading Terraform v$TERRAFORM_VERSION from '$TERRAFORM_DOWNLOAD_URL'"
 
     # Download and install Terraform v1.1.7 as that is the version used for the development of this code-base.
     # TODO: Once Base and Ceiling versions have been validated, the code here will be modified to download the Ceiling version of terraform as required by the scripts in this code-base.
     mkdir -p ${HOME}/bin/ && cd ${HOME}/bin/ && wget $TERRAFORM_DOWNLOAD_URL && unzip $TERRAFORM_DOWNLOAD_FILE && rm $TERRAFORM_DOWNLOAD_FILE
 
     # Display an confirmation of the successful installation of Terraform.
-    echo "Installed: `${HOME}/bin/terraform version`"
+    echo -e "\nInstalled: `${HOME}/bin/terraform version`"
 }
 
 function install_kubectl() {
@@ -30,11 +31,11 @@ function install_kubectl() {
     KUBECTL_VERSION="1.23.0"
 
     # Check if kubectl is already installed and display the version as installed.
-    [[ -f ${HOME}/bin/kubectl ]] && echo "kubectl is already installed at ${HOME}/bin/kubectl" && return 0
+    [[ -f ${HOME}/bin/kubectl ]] && echo -e "\nkubectl is already installed at ${HOME}/bin/kubectl" && return 0
 
     KUBECTL_DOWNLOAD_URL="https://dl.k8s.io/release/v$KUBECTL_VERSION/bin/linux/amd64/kubectl"
 
-    echo "Downloading Kubectl v$KUBECTL_VERSION from '$KUBECTL_DOWNLOAD_URL'"
+    echo -e "\nDownloading Kubectl v$KUBECTL_VERSION from '$KUBECTL_DOWNLOAD_URL'"
 
     # Download and install kubectl v1.23.0, move it to the bin folder
     mkdir -p ${HOME}/bin/ && cd ${HOME}/bin/ && curl -LO $KUBECTL_DOWNLOAD_URL && chmod +x kubectl
@@ -45,7 +46,7 @@ function install_aws_iam_authenticator() {
     AWS_IAM_AUTH_VERSION="1.21.2"
 
     # Check if aws-iam-authenticator is already installed and display the version as installed.
-    [[ -f ${HOME}/bin/aws-iam-authenticator ]] && echo "aws-iam-authenticator is already installed at ${HOME}/bin/aws-iam-authenticator" && return 0
+    [[ -f ${HOME}/bin/aws-iam-authenticator ]] && echo -e "\naws-iam-authenticator is already installed at ${HOME}/bin/aws-iam-authenticator" && return 0
 
     AWS_IAM_AUTH_DOWNLOAD_URL="https://s3.us-west-2.amazonaws.com/amazon-eks/$AWS_IAM_AUTH_VERSION/2021-07-05/bin/linux/amd64/aws-iam-authenticator"
 
@@ -57,17 +58,17 @@ function deploy_panorama() {
     cd "${HOME}/panw-zero-trust-aws/terraform/panorama"
 
     # Initialize terraform
-    echo "Initializing directory for lab resource deployment"
+    echo -e "\nInitializing directory for lab resource deployment"
     terraform init
 
     # Deploy resources
-    echo "Deploying Panorama Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
+    echo -e "\nDeploying Panorama Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
     terraform apply -auto-approve
 
     if [ $? -eq 0 ]; then
-        echo "Panorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
+        echo -e "\nPanorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
     else
-        echo "Panorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Failed!"
+        echo -e "\nPanorama for AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Failed!"
         exit 1
     fi
 }
@@ -84,17 +85,17 @@ function deploy_vmseries_lab() {
     cd "${HOME}/panw-zero-trust-aws/terraform/vmseries"
 
     # Initialize terraform
-    echo "Initializing directory for lab resource deployment"
+    echo -e "\nInitializing directory for lab resource deployment"
     terraform init
 
     # Deploy resources
-    echo "Deploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
+    echo -e "\nDeploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust with VM-Series on AWS"
     terraform apply -auto-approve
 
     if [ $? -eq 0 ]; then
-        echo "AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
+        echo -e "\nAWS Zero Trust Reference Architecture with VM-Series Lab Deployment Completed successfully!"
     else
-        echo "AWS Zero Trust Reference Architecture with VM-Series Lab Deployment Failed!"
+        echo -e "\nAWS Zero Trust Reference Architecture with VM-Series Lab Deployment Failed!"
         exit 1
     fi
 }
@@ -102,7 +103,7 @@ function deploy_vmseries_lab() {
 function deploy_cnseries_lab() {
 
     # Getting the public IP address of the newly deployed Panorama
-    echo "Updating the Panorama IP in CN-Series config file for deployment"
+    echo -e "\nUpdating the Panorama IP in CN-Series config file for deployment"
     HARD_CODED_PANORAMA_IP="35.182.55.251"
     NEW_PANORAMA_IP=$(get_panorama_ip)
 
@@ -110,26 +111,35 @@ function deploy_cnseries_lab() {
     cd "${HOME}/panw-zero-trust-aws/terraform/cnseries"
 
     # Initialize terraform
-    echo "Initializing directory for lab resource deployment"
+    echo -e "\nInitializing directory for lab resource deployment"
     terraform init
 
     # Deploy resources
-    echo "Deploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust with CN-Series on AWS"
+    echo -e "\nDeploying Resources required for Palo Alto Networks Reference Architecture for Zero Trust with CN-Series on AWS"
     terraform apply -auto-approve
 
     if [ $? -eq 0 ]; then
-        echo "AWS Zero Trust Reference Architecture with CN-Series Lab Deployment Completed successfully!"
+        echo -e "\nAWS Zero Trust Reference Architecture with CN-Series Lab Deployment Completed successfully!"
     else
-        echo "AWS Zero Trust Reference Architecture with CN-Series Lab Deployment Failed!"
-        echo "Please try updating the kubeconfig and run setup again. Check the Lab Guide for more details."
+        echo -e "\nAWS Zero Trust Reference Architecture with CN-Series Lab Deployment Failed!"
+        echo -e "\nPlease try updating the kubeconfig and run setup again. Check the Lab Guide for more details."
         exit 1
     fi
 
     # Updating the Panorama IP in CN-Series config file for deployment
     sed -i "s/$HARD_CODED_PANORAMA_IP/$NEW_PANORAMA_IP/" cn-series/pan-cn-mgmt-configmap.yaml
 
+    # Running the kubeconfig command as required for the lab
+    echo -e "\nRunning the kubeconfig command as required for the lab"
     KUBECTL_CONFIG_COMMAND=$(terraform output kubectl_config_command | sed -e 's/^"//' -e 's/"$//')
+    # echo -e "\nKubeconfig command is '$KUBECTL_CONFIG_COMMAND'"
+    eval $KUBECTL_CONFIG_COMMAND
+
+    # Running the demo application for the CN-Series to secure.
+    echo -e "\nRunning the demo application for the CN-Series to secure"
     KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
+    # echo -e "\nApp deployment command is '$KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND'"
+    eval $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
 }
 
 install_prerequisites
