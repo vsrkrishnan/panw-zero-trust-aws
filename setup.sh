@@ -140,6 +140,11 @@ function deploy_cnseries_lab() {
     KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
     # echo -e "\nApp deployment command is '$KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND'"
     eval $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
+
+    # Deploying CN-Series firewalls
+    echo -e "\nDeploying CN-Series firewalls"
+    cd "${HOME}/panw-zero-trust-aws/terraform/cnseries/cn-series"
+    /bin/bash ./install-cn.sh
 }
 
 install_prerequisites
