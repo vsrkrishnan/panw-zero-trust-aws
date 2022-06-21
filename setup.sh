@@ -129,22 +129,54 @@ function deploy_cnseries_lab() {
     # Updating the Panorama IP in CN-Series config file for deployment
     sed -i "s/$HARD_CODED_PANORAMA_IP/$NEW_PANORAMA_IP/" cn-series/pan-cn-mgmt-configmap.yaml
 
+    KUBECTL_CONFIG_COMMAND=$(terraform output kubectl_config_command | sed -e 's/^"//' -e 's/"$//')
+    KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
+    CD_CNSERIES_DIR="cd ${HOME}/panw-zero-trust-aws/terraform/cnseries/cn-series"
+    INSTALL_CN_COMMAND="/bin/bash ./install-cn.sh"
+
     # Running the kubeconfig command as required for the lab
     echo -e "\nRunning the kubeconfig command as required for the lab"
-    KUBECTL_CONFIG_COMMAND=$(terraform output kubectl_config_command | sed -e 's/^"//' -e 's/"$//')
     # echo -e "\nKubeconfig command is '$KUBECTL_CONFIG_COMMAND'"
     eval $KUBECTL_CONFIG_COMMAND
 
+    if [ $? -ne 0 ]; then
+        REMAINING_COMMANDS="
+        There was an error seen while updating the kubeconfig. Please run the below commands manually.
+        ----------------------------------------------------------------------------------------------
+        $KUBECTL_CONFIG_COMMAND
+        $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
+        $CD_CNSERIES_DIR
+        $INSTALL_CN_COMMAND
+        "
+
+        echo $REMAINING_COMMANDS
+    fi
+
     # Running the demo application for the CN-Series to secure.
     echo -e "\nRunning the demo application for the CN-Series to secure"
-    KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
     # echo -e "\nApp deployment command is '$KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND'"
     eval $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
+
+    if [ $? -ne 0 ]; then
+        REMAINING_COMMANDS="
+        There was an error seen while deploying the demo application. Please run the below commands manually.
+        -----------------------------------------------------------------------------------------------------
+        $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
+        $CD_CNSERIES_DIR
+        $INSTALL_CN_COMMAND
+        "
+
+        echo $REMAINING_COMMANDS
+    fi
 
     # Deploying CN-Series firewalls
     echo -e "\nDeploying CN-Series firewalls"
     cd "${HOME}/panw-zero-trust-aws/terraform/cnseries/cn-series"
     /bin/bash ./install-cn.sh
+
+    if [ $? -ne 0 ]; then
+        echo -e "\nThere was an error seen while deploying the CN-Series firewalls."
+    fi
 }
 
 install_prerequisites
