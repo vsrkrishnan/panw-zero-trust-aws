@@ -136,37 +136,11 @@ function deploy_cnseries_lab() {
 
     # Running the kubeconfig command as required for the lab
     echo -e "\nRunning the kubeconfig command as required for the lab"
-    # echo -e "\nKubeconfig command is '$KUBECTL_CONFIG_COMMAND'"
     eval $KUBECTL_CONFIG_COMMAND
 
     if [ $? -ne 0 ]; then
-        REMAINING_COMMANDS="
-        There was an error seen while updating the kubeconfig. Please run the below commands manually.
-        ----------------------------------------------------------------------------------------------
-        $KUBECTL_CONFIG_COMMAND
-        $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
-        $CD_CNSERIES_DIR
-        $INSTALL_CN_COMMAND
-        "
-
-        echo $REMAINING_COMMANDS
-    fi
-
-    # Running the demo application for the CN-Series to secure.
-    echo -e "\nRunning the demo application for the CN-Series to secure"
-    # echo -e "\nApp deployment command is '$KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND'"
-    eval $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
-
-    if [ $? -ne 0 ]; then
-        REMAINING_COMMANDS="
-        There was an error seen while deploying the demo application. Please run the below commands manually.
-        -----------------------------------------------------------------------------------------------------
-        $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
-        $CD_CNSERIES_DIR
-        $INSTALL_CN_COMMAND
-        "
-
-        echo $REMAINING_COMMANDS
+        echo "There was an error seen while updating the kubeconfig."
+        exit 1
     fi
 
     # Deploying CN-Series firewalls
@@ -176,6 +150,17 @@ function deploy_cnseries_lab() {
 
     if [ $? -ne 0 ]; then
         echo -e "\nThere was an error seen while deploying the CN-Series firewalls."
+        exit 1
+    fi
+
+    # Running the demo application for the CN-Series to secure.
+    echo -e "\nRunning the demo application for the CN-Series to secure"
+    cd "${HOME}/panw-zero-trust-aws/terraform/cnseries"
+    eval $KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND
+
+    if [ $? -ne 0 ]; then
+        echo "There was an error seen while deploying the demo application."
+        exit 1
     fi
 }
 
