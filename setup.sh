@@ -72,6 +72,13 @@ function deploy_panorama() {
     fi
 }
 
+function get_panorama_ip() {
+    cd "${HOME}/panw-zero-trust-aws/terraform/panorama"
+
+    PANORAMA_IP=$(terraform output PANORAMA_IP_ADDRESS | sed -e 's/^"//' -e 's/"$//')
+    echo $PANORAMA_IP
+}
+
 function deploy_vmseries_lab() {
     # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
     cd "${HOME}/panw-zero-trust-aws/terraform/vmseries"
@@ -94,6 +101,11 @@ function deploy_vmseries_lab() {
 
 function deploy_cnseries_lab() {
 
+    # Getting the public IP address of the newly deployed Panorama
+    echo "Updating the Panorama IP in CN-Series config file for deployment"
+    HARD_CODED_PANORAMA_IP="35.182.55.251"
+    NEW_PANORAMA_IP=$(get_panorama_ip)
+
     # Assuming that this setup script is being run from the cloned github repo, changing the current working directory to one from where Terraform will deploy the lab resources.
     cd "${HOME}/panw-zero-trust-aws/terraform/cnseries"
 
@@ -112,6 +124,12 @@ function deploy_cnseries_lab() {
         echo "Please try updating the kubeconfig and run setup again. Check the Lab Guide for more details."
         exit 1
     fi
+
+    # Updating the Panorama IP in CN-Series config file for deployment
+    sed -i "s/$HARD_CODED_PANORAMA_IP/$NEW_PANORAMA_IP/" cn-series/pan-cn-mgmt-configmap.yaml
+
+    KUBECTL_CONFIG_COMMAND=$(terraform output kubectl_config_command | sed -e 's/^"//' -e 's/"$//')
+    KUBECTL_DEMO_APP_DEPLOYMENT_COMMAND=$(terraform output kubectl_demo_application_deployment_command | sed -e 's/^"//' -e 's/"$//')
 }
 
 install_prerequisites
