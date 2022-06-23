@@ -171,6 +171,8 @@ locals {
   node_group_userdata = <<USERDATA
 #!/bin/bash
 set -o xtrace
+sudo apt-get update -y
+sudo apt-get -y install net-tools
 /etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.ControlPlane.endpoint}' --b64-cluster-ca '${aws_eks_cluster.ControlPlane.certificate_authority.0.data}' '${aws_eks_cluster.ControlPlane.name}'
 USERDATA
 }
